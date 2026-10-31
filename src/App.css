@@ -1,1 +1,274 @@
-/* Paste your Assignment 1 styles.css here. Keep the icons in src/assets/ so url(assets/...) paths keep working. */
+/* ==========================================================
+   Task Manager - Assignment 2 (adapted from the Assignment 1 styles)
+   Layout method: Flexbox only
+   ========================================================== */
+
+/* ========== DESIGN TOKENS ========== */
+:root {
+    --color-primary: #dc4c3e;        /* header background */
+    --color-on-primary: #ffffff;     /* header text and icons */
+    --color-sidebar: #fefbf2;        /* left navigation background */
+    --color-surface: #ffffff;        /* page and active item background */
+    --color-text: #000000;           /* main font color */
+    --color-text-muted: #7e7d79;     /* task counts and completed tasks */
+    --color-divider: #f0f0f0;        /* horizontal rules between tasks */
+    --color-checkbox: #808080;       /* task checkbox outline */
+
+    --header-height: 42px;
+    --sidebar-width: 300px;
+}
+
+/* ========== BASE STYLES ========== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* React renders inside #root, so it passes the column layout on to the app */
+#root {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* Form controls do not inherit fonts by default */
+button,
+input {
+    font: inherit;
+}
+
+img {
+    display: block;
+}
+
+/* ========== HEADER STYLES ========== */
+.main-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 10px;
+    height: var(--header-height);
+    padding: 0 16px 0 40px;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 14px;
+}
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Menu icon (three horizontal lines) */
+.menu-button {
+    display: flex;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    background: none;
+    cursor: pointer;
+}
+
+.menu-button:focus-visible {
+    outline: 2px solid var(--color-on-primary);
+    outline-offset: 2px;
+}
+
+/* Quick find box */
+.quick-find {
+    display: flex;
+    flex: 0 1 228px;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    height: 28px;
+    padding: 0 8px 0 4px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.quick-find:focus-within {
+    background-color: rgba(255, 255, 255, 0.3);
+    outline: 2px solid var(--color-on-primary);
+}
+
+.quick-find-label {
+    cursor: text;
+}
+
+.quick-find-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--color-on-primary);
+}
+
+.quick-find-input::placeholder {
+    color: var(--color-on-primary);
+    opacity: 1;
+}
+
+/* Completed task counter, pushed to the right edge */
+.task-counter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 0 auto;
+    white-space: nowrap;
+}
+
+/* Holds the sidebar and main content side by side */
+.content-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+/* ========== NAVIGATION STYLES ========== */
+.sidebar {
+    flex: 0 0 var(--sidebar-width);
+    width: var(--sidebar-width);
+    padding: 30px 5px 30px 35px;
+    background-color: var(--color-sidebar);
+    color: var(--color-text);
+}
+
+.nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 5px;
+    border-radius: 5px;
+    color: var(--color-text);
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link-active {
+    background-color: var(--color-surface);
+}
+
+.nav-link-active {
+    font-weight: 700;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.nav-count {
+    color: var(--color-text-muted);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+/* ========== MAIN CONTENT STYLES ========== */
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 36px 55px;
+}
+
+.section-heading {
+    margin: 0 0 10px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+.task-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Each task sits above a horizontal rule */
+.task-item {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--color-divider);
+}
+
+/* Circular checkbox drawn with CSS instead of an image */
+.task-checkbox {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin: 11px 0 0; /* centers the circle on the first line of the label */
+    border: 1px solid var(--color-checkbox);
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    cursor: pointer;
+    appearance: none;
+}
+
+.task-checkbox:checked {
+    background-color: var(--color-checkbox);
+    box-shadow: inset 0 0 0 3px var(--color-surface);
+}
+
+.task-checkbox:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Padding on the label keeps the whole row clickable */
+.task-label {
+    flex: 1;
+    padding: 10px 0 10px 10px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.task-checkbox:checked + .task-label {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+}
+
+/* ========== RESPONSIVE STYLES ========== */
+/* Tablets: the sidebar keeps its 300px, so give the task list more room */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 24px 20px;
+    }
+}
+
+/* Phones */
+@media (max-width: 480px) {
+    .main-header {
+        padding: 0 16px;
+    }
+
+    /* Left navigation disappears on small screens */
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        padding: 24px 16px;
+    }
+}
