@@ -1,14 +1,35 @@
+import Header from './components/Header.jsx'
+import Sidebar from './components/Sidebar.jsx'
+import TaskList from './components/TaskList.jsx'
 import './App.css'
 
-// Assignment 2: build the Task Manager here.
-// Step 1 (after the Oct 12 class): hard-coded tasks, the five components, props.
-// Step 2 (after the Oct 19 class): useState, the controlled form, toggle, delete, filtering.
+const INITIAL_TASKS = [
+  { id: 1, text: 'Call Mom', completed: false },
+  { id: 2, text: 'Buy the new issue of Scientific American', completed: false },
+  { id: 3, text: 'Return the textbook to Josie', completed: false },
+  { id: 4, text: 'Buy the new album by Rake', completed: false },
+  { id: 5, text: 'Buy a gift card for Dad', completed: false },
+]
+
 function App() {
+  const tasks = INITIAL_TASKS
+  const completedCount = tasks.filter((task) => task.completed).length
+
   return (
-    <div className="app">
-      <h1>Task Manager</h1>
-      <p>Replace this with your components.</p>
-    </div>
+    <>
+      <Header total={tasks.length} completed={completedCount} />
+
+      <div className="content-wrapper">
+        <Sidebar activeCount={tasks.length - completedCount} />
+
+        <main className="main-content">
+          <section className="task-section" id="inbox" aria-labelledby="inbox-heading">
+            <h1 className="section-heading" id="inbox-heading">Inbox</h1>
+            <TaskList tasks={tasks} />
+          </section>
+        </main>
+      </div>
+    </>
   )
 }
 
