@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Header from './components/Header.jsx'
 import Sidebar from './components/Sidebar.jsx'
+import TaskFilter from './components/TaskFilter.jsx'
 import TaskForm from './components/TaskForm.jsx'
 import TaskList from './components/TaskList.jsx'
 import './App.css'
@@ -15,8 +16,19 @@ const INITIAL_TASKS = [
 
 function App() {
   const [tasks, setTasks] = useState(INITIAL_TASKS)
+  const [filter, setFilter] = useState('All')
 
   const completedCount = tasks.filter((task) => task.completed).length
+
+  const visibleTasks = tasks.filter((task) => {
+    if (filter === 'Active') {
+      return !task.completed
+    }
+    if (filter === 'Completed') {
+      return task.completed
+    }
+    return true
+  })
 
   function handleAddTask(text) {
     setTasks((currentTasks) => {
@@ -45,7 +57,8 @@ function App() {
         <main className="main-content">
           <section className="task-section" id="inbox" aria-labelledby="inbox-heading">
             <h1 className="section-heading" id="inbox-heading">Inbox</h1>
-            <TaskList tasks={tasks} onToggleTask={handleToggleTask} onDeleteTask={handleDeleteTask} />
+            <TaskFilter activeFilter={filter} onFilterChange={setFilter} />
+            <TaskList tasks={visibleTasks} onToggleTask={handleToggleTask} onDeleteTask={handleDeleteTask} />
             <TaskForm onAddTask={handleAddTask} />
           </section>
         </main>
