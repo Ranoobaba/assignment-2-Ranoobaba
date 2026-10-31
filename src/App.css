@@ -134,7 +134,7 @@ img {
     opacity: 1;
 }
 
-/* Completed task counter, pushed to the right edge */
+/* Total / completed counter, pushed to the right edge */
 .task-counter {
     display: flex;
     align-items: center;
@@ -232,7 +232,7 @@ img {
     cursor: pointer;
 }
 
-/* Color only: bolder text is wider and would shift the separators */
+/* Not bold: bolder text is wider and would shift the separators */
 .filter-button-active {
     color: var(--color-primary);
     text-decoration: underline;
