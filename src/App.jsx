@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import Header from './components/Header.jsx'
 import Sidebar from './components/Sidebar.jsx'
+import TaskForm from './components/TaskForm.jsx'
 import TaskList from './components/TaskList.jsx'
 import './App.css'
 
@@ -12,8 +14,26 @@ const INITIAL_TASKS = [
 ]
 
 function App() {
-  const tasks = INITIAL_TASKS
+  const [tasks, setTasks] = useState(INITIAL_TASKS)
+
   const completedCount = tasks.filter((task) => task.completed).length
+
+  function handleAddTask(text) {
+    setTasks((currentTasks) => {
+      const nextId = Math.max(0, ...currentTasks.map((task) => task.id)) + 1
+      return [...currentTasks, { id: nextId, text, completed: false }]
+    })
+  }
+
+  function handleToggleTask(id) {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task)),
+    )
+  }
+
+  function handleDeleteTask(id) {
+    setTasks((currentTasks) => currentTasks.filter((task) => task.id !== id))
+  }
 
   return (
     <>
@@ -25,7 +45,8 @@ function App() {
         <main className="main-content">
           <section className="task-section" id="inbox" aria-labelledby="inbox-heading">
             <h1 className="section-heading" id="inbox-heading">Inbox</h1>
-            <TaskList tasks={tasks} />
+            <TaskList tasks={tasks} onToggleTask={handleToggleTask} onDeleteTask={handleDeleteTask} />
+            <TaskForm onAddTask={handleAddTask} />
           </section>
         </main>
       </div>

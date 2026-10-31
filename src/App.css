@@ -239,14 +239,86 @@ img {
 /* Padding on the label keeps the whole row clickable */
 .task-label {
     flex: 1;
+    min-width: 0;
     padding: 10px 0 10px 10px;
     line-height: 20px;
+    overflow-wrap: anywhere;
     cursor: pointer;
 }
 
 .task-checkbox:checked + .task-label {
     color: var(--color-text-muted);
     text-decoration: line-through;
+}
+
+/* Stays visible on touch screens, where there is no hover to reveal it */
+.task-delete {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    margin: 8px 0 0 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 3px;
+    background: none;
+    color: var(--color-text-muted);
+    font-size: 18px;
+    line-height: 24px;
+    cursor: pointer;
+}
+
+.task-delete:focus-visible {
+    outline: 2px solid var(--color-primary);
+}
+
+/* Shown when no tasks match */
+.task-empty {
+    margin: 0;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-divider);
+    color: var(--color-text-muted);
+    line-height: 20px;
+}
+
+/* Add task form, under the list so new tasks appear right above it */
+.task-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.task-input {
+    flex: 1;
+    min-width: 0;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--color-checkbox);
+    border-radius: 5px;
+    outline: none;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+}
+
+.task-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.task-add-button {
+    flex-shrink: 0;
+    height: 34px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 5px;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.task-add-button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 /* ========== RESPONSIVE STYLES ========== */
