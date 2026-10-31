@@ -19,6 +19,7 @@ function TaskForm({ onAddTask }) {
     <form className="task-form" onSubmit={handleSubmit}>
       <input
         className="task-input"
+        id="new-task-input"
         type="text"
         placeholder="Add a task"
         aria-label="New task"
